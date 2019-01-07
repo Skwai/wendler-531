@@ -27,7 +27,7 @@ export default class App extends Vue {
     await this.$store.dispatch("loadSession");
 
     if (this.isAuthenticated) {
-      await this.$store.dispatch("loadOrCreateUser", this.$store.getters.uid);
+      await this.$store.dispatch("loadOrCreateUser");
     }
   }
 
@@ -35,7 +35,7 @@ export default class App extends Vue {
     await this.$store.dispatch("login");
 
     if (this.isAuthenticated) {
-      await this.$store.dispatch("loadOrCreateUser", this.$store.getters.uid);
+      await this.$store.dispatch("loadOrCreateUser");
     }
   }
 }

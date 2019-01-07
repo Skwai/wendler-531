@@ -40,7 +40,8 @@ export const logout = ({ commit }: IActionContext): void => {
   commit(types.RESET_STATE);
 };
 
-export const loadOrCreateUser = async ({ commit }: IActionContext, uid: string): Promise<void> => {
+export const loadOrCreateUser = async ({ commit, getters }: IActionContext): Promise<void> => {
+  const { uid, userInfo } = getters;
   const ref = userDocRef(uid);
   const doc = await ref.get();
 
@@ -49,7 +50,10 @@ export const loadOrCreateUser = async ({ commit }: IActionContext, uid: string):
     return;
   }
 
-  const user = new User(uid);
+  const user = new User(uid, {
+    email: userInfo.email
+  });
+
   commit(types.SET_CURRENT_USER, user);
   await ref.set({
     ...user
